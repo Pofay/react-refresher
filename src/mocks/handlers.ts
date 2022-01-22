@@ -8,7 +8,7 @@ interface Meetup {
   description: string
 }
 
-const allMeetups: Array<Meetup> = [
+let allMeetups: Array<Meetup> = [
   {
     id: 1,
     title: 'React Dev Berlin Conference',
@@ -26,8 +26,32 @@ const allMeetups: Array<Meetup> = [
   },
 ]
 
+interface CreateNewMeetupBody {
+  id: number
+  title: string
+  image: string
+  address: string
+  description: string
+}
+
 export const handlers = [
   rest.get('/meetups', (req, res, ctx) => {
     return res(ctx.json({ data: allMeetups }))
+  }),
+
+  rest.post<CreateNewMeetupBody>('/meetups', (req, res, ctx) => {
+    const { id, title, image, address, description } = req.body
+
+    const createdMeetup: Meetup = {
+      id,
+      title,
+      image,
+      address,
+      description,
+    }
+
+    allMeetups = allMeetups.concat(createdMeetup)
+
+    return res(ctx.status(201), ctx.json({ data: createdMeetup }))
   }),
 ]
