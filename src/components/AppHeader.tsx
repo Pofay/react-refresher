@@ -12,16 +12,22 @@ import { SyntheticEvent } from 'react'
 
 type AppHeaderProps = {
   tabIndex: number
+  favoritesCount: number
   handleTabChange: (event: SyntheticEvent, newTabIndex: number) => void
 }
 
-const AppHeader = ({ tabIndex, handleTabChange }: AppHeaderProps) => {
+const AppHeader = ({
+  tabIndex,
+  favoritesCount,
+  handleTabChange,
+}: AppHeaderProps) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
         <Toolbar>
           <AppHeaderContent
             tabIndex={tabIndex}
+            favoritesCount={favoritesCount}
             handleTabChange={handleTabChange}
           />
         </Toolbar>
@@ -30,7 +36,11 @@ const AppHeader = ({ tabIndex, handleTabChange }: AppHeaderProps) => {
   )
 }
 
-const AppHeaderContent = ({ tabIndex, handleTabChange }: AppHeaderProps) => {
+const AppHeaderContent = ({
+  tabIndex,
+  favoritesCount,
+  handleTabChange,
+}: AppHeaderProps) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={4}>
@@ -54,7 +64,7 @@ const AppHeaderContent = ({ tabIndex, handleTabChange }: AppHeaderProps) => {
           <Tab label='All Meetups' />
           <Tab label='Add New Meetup' />
           <Tab
-            icon={<Chip label='0' />}
+            icon={<Chip label={favoritesCount.toString()} />}
             label='My Favorites'
             iconPosition='end'
           />

@@ -6,6 +6,7 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material'
+import { SyntheticEvent } from 'react'
 
 interface MeetupCardProps {
   id: number
@@ -13,6 +14,7 @@ interface MeetupCardProps {
   image: string
   address: string
   description: string
+  onFavorite: (event: SyntheticEvent, meetupId: number) => void
 }
 
 const MeetupCard = ({
@@ -21,6 +23,7 @@ const MeetupCard = ({
   image,
   address,
   description,
+  onFavorite,
 }: MeetupCardProps) => {
   return (
     <Card sx={{ maxWidth: 500, margin: 'auto', marginTop: '20px' }}>
@@ -34,7 +37,12 @@ const MeetupCard = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size='small'>Favorite</Button>
+        <Button
+          onClick={(event: SyntheticEvent) => onFavorite(event, id)}
+          size='small'
+        >
+          Favorite
+        </Button>
       </CardActions>
     </Card>
   )

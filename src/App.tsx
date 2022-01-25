@@ -31,16 +31,23 @@ function App() {
 
   const handleFavorite = (event: SyntheticEvent, meetUpId: number) => {
     event.preventDefault()
+    setMeetups(
+      meetups.map((m) => (m.id !== meetUpId ? m : { ...m, isFavorite: true }))
+    )
   }
 
   return (
     <div className='App'>
-      <AppHeader tabIndex={tabIndex} handleTabChange={handleTabChange} />
+      <AppHeader
+        tabIndex={tabIndex}
+        handleTabChange={handleTabChange}
+        favoritesCount={meetups.filter((m) => m.isFavorite).length}
+      />
       <div style={{ margin: 'auto', width: '900px' }}>
         <TabPanel value={tabIndex} index={0}>
           <Typography variant='h3'>All Current Meetups</Typography>
           {meetups.map((m) => (
-            <MeetupCard key={m.id} {...m} />
+            <MeetupCard onFavorite={handleFavorite} key={m.id} {...m} />
           ))}
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
@@ -57,7 +64,7 @@ function App() {
           {meetups
             .filter((m) => m.isFavorite)
             .map((m) => (
-              <MeetupCard key={m.id} {...m} />
+              <MeetupCard onFavorite={handleFavorite} key={m.id} {...m} />
             ))}
         </TabPanel>
       </div>
