@@ -1,12 +1,5 @@
 import { rest } from 'msw'
-
-interface Meetup {
-  id: number
-  title: string
-  image: string
-  address: string
-  description: string
-}
+import { Meetup } from '../types/meetup'
 
 let allMeetups: Array<Meetup> = [
   {
@@ -15,6 +8,7 @@ let allMeetups: Array<Meetup> = [
     image: 'https://miro.medium.com/max/1024/1*zV6JSvx76Gl6y9jMXdurjg.jpeg',
     address: 'Berlin',
     description: 'New York City',
+    isFavorite: false,
   },
   {
     id: 2,
@@ -23,6 +17,7 @@ let allMeetups: Array<Meetup> = [
       'https://mogi-group.com/content/uploads/2018/02/mogi-group-attend-gdc-2018.png',
     address: 'New York',
     description: 'New York City',
+    isFavorite: false,
   },
 ]
 
@@ -32,6 +27,7 @@ interface CreateNewMeetupBody {
   image: string
   address: string
   description: string
+  isFavorite: boolean
 }
 
 export const handlers = [
@@ -40,7 +36,7 @@ export const handlers = [
   }),
 
   rest.post<CreateNewMeetupBody>('/meetups', (req, res, ctx) => {
-    const { id, title, image, address, description } = req.body
+    const { id, title, image, address, description, isFavorite } = req.body
 
     const createdMeetup: Meetup = {
       id,
@@ -48,6 +44,7 @@ export const handlers = [
       image,
       address,
       description,
+      isFavorite,
     }
 
     allMeetups = allMeetups.concat(createdMeetup)

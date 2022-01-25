@@ -29,6 +29,10 @@ function App() {
     setTabIndex(newTabIndex)
   }
 
+  const handleFavorite = (event: SyntheticEvent, meetUpId: number) => {
+    event.preventDefault()
+  }
+
   return (
     <div className='App'>
       <AppHeader tabIndex={tabIndex} handleTabChange={handleTabChange} />
@@ -50,6 +54,11 @@ function App() {
         </TabPanel>
         <TabPanel value={tabIndex} index={2}>
           <Typography variant='h3'>My Favorites</Typography>
+          {meetups
+            .filter((m) => m.isFavorite)
+            .map((m) => (
+              <MeetupCard key={m.id} {...m} />
+            ))}
         </TabPanel>
       </div>
     </div>

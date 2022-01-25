@@ -4,4 +4,5 @@ export type Meetup = {
   image: string
   address: string
   description: string
+  isFavorite: boolean
 }

@@ -45,6 +45,7 @@ const MeetupForm = ({
         address,
         image,
         description,
+        isFavorite: false,
       }),
     })
       .then((res) => res.json())
@@ -54,8 +55,7 @@ const MeetupForm = ({
     event.preventDefault()
     postNewMeetup(currentId, title, image, address, description)
       .then((res) => {
-        const updatedMeetups = meetups.concat(res)
-        setMeetups(updatedMeetups)
+        setMeetups([...meetups, res])
         setCurrentId(currentId + 1)
       })
       .then(() => resetFormData())
